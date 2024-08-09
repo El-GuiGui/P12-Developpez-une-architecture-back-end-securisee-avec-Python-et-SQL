@@ -1,0 +1,13 @@
+[tool.black]
+line-length = 119
+exclude = '''
+/(
+    \.git
+  | env
+  | __pycache__
+  | build
+  | dist
+  | .*_cache
+  | .*\.egg-info
+)/
+'''
