@@ -4,6 +4,7 @@ from models.contract_model import Contract
 from models.event_model import Event
 from views.data_view import DataView
 from controllers.auth_controller import AuthController
+from rich.console import Console
 
 
 class DataController:
@@ -12,6 +13,7 @@ class DataController:
         self.db = db
         self.data_view = DataView()
         self.auth_controller = auth_controller
+        self.console = Console()
 
     def start(self):
         if self.auth_controller.is_authenticated():
@@ -25,12 +27,12 @@ class DataController:
                 elif choice == "3":
                     self.view_events()
                 elif choice == "4":
-                    print("Returning to main menu.")
+                    self.console.print("[bold yellow]Returning to main menu.[/bold yellow]")
                     break
                 else:
-                    print("Invalid choice. Please try again.")
+                    self.console.print("[bold red]Invalid choice. Please try again.[/bold red]")
         else:
-            print("You must be logged in to view this information.")
+            self.console.print("[bold yellow]You must be logged in to view this information.[/bold yellow]")
 
     def view_clients(self):
         clients = self.db.query(Client).all()

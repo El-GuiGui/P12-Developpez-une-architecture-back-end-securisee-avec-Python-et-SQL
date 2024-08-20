@@ -24,9 +24,12 @@ class User(Base):
     role_id = Column(Integer, ForeignKey("roles.id"))
 
     role = relationship("Role", back_populates="users")
-    clients = relationship("Client", back_populates="user")
-    contracts = relationship("Contract", back_populates="user")
-    events = relationship("Event", back_populates="user")
+
+    def __init_subclass__(cls, **kwargs):
+        super().__init_subclass__(**kwargs)
+        cls.clients = relationship("Client", back_populates="user")
+        cls.contracts = relationship("Contract", back_populates="user")
+        cls.events = relationship("Event", back_populates="user")
 
     def set_password(self, password):
         self.password_hash = argon2.hash(password)
