@@ -16,3 +16,5 @@ class Client(Base):
     user_id = Column(Integer, ForeignKey("users.id"))
 
     user = relationship("User", back_populates="clients")
+    contracts = relationship("Contract", back_populates="client")
+    events = relationship("Event", back_populates="client")

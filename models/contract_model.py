@@ -16,3 +16,4 @@ class Contract(Base):
 
     user = relationship("User", back_populates="contracts")
     client = relationship("Client", back_populates="contracts")
+    events = relationship("Event", back_populates="contract")

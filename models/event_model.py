@@ -19,5 +19,5 @@ class Event(Base):
     user_id = Column(Integer, ForeignKey("users.id"))
 
     user = relationship("User", back_populates="events")
-    contract = relationship("Contract", back_populates="events")
     client = relationship("Client", back_populates="events")
+    contract = relationship("Contract", back_populates="events")

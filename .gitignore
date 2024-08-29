@@ -6,6 +6,9 @@ controller/__pycache__/
 model/__pycache__/
 view/__pycache__/
 .coverage
+alembic.ini
+alembic/
+
 
 # all .py files
 !.py
