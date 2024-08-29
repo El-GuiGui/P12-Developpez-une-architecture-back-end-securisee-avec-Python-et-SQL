@@ -8,7 +8,7 @@ from rich.console import Console
 
 SECRET_KEY = "epic-events-secret-key"
 ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 999999
+ACCESS_TOKEN_EXPIRE_MINUTES = 9999999
 
 
 class AuthController:
@@ -18,6 +18,7 @@ class AuthController:
         self.auth_view = AuthView()
         self.console = Console()
         self.token = None
+        self.current_user = None
 
     def start(self):
         self.create_default_roles()
@@ -115,6 +116,7 @@ class AuthController:
             access_token = self.create_access_token(data={"sub": user.email}, expires_delta=access_token_expires)
             with open("token.txt", "w") as token_file:
                 token_file.write(access_token)
+            self.current_user = user
             self.console.print("[bold green]Login successful[/bold green]")
             return access_token
         else:

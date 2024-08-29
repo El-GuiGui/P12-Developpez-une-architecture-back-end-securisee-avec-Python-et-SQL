@@ -7,17 +7,98 @@ class DataView:
     def __init__(self):
         self.console = Console()
 
-    def display_data_menu(self):
+    def display_data_menu(self, role):
         self.console.rule("[bold green]Epic Events Administration[/bold green]")
         self.console.rule(
             "[bold green]OK[/bold green] - [bold yellow]Information Message[/bold yellow] - [bold red]Error/Problem/Incorrect entry[/bold red]"
         )
         self.console.rule("[bold white]Data Menu :[/bold white]")
-        self.console.print("[bold green]1. View Clients[/bold green]")
-        self.console.print("[bold green]2. View Contracts[/bold green]")
-        self.console.print("[bold green]3. View Events[/bold green]")
-        self.console.print("[bold green]4. Return to Main Menu[/bold green]")
-        return Prompt.ask("Choose an option")
+
+        options = {}
+        num = 1
+
+        # Options disponibles pour tous
+        self.console.print(f"[bold white]{num}. View Clients[/bold white]")
+        options[str(num)] = "view_clients"
+        num += 1
+
+        self.console.print(f"[bold white]{num}. View Contracts[/bold white]")
+        options[str(num)] = "view_contracts"
+        num += 1
+
+        self.console.print(f"[bold white]{num}. View Events[/bold white]")
+        options[str(num)] = "view_events"
+        num += 1
+
+        # Options spécifiques aux rôles
+        if role == "Commercial":
+            self.console.print(f"[bold white]{num}. Create Client[/bold white]")
+            options[str(num)] = "create_client"
+            num += 1
+
+            self.console.print(f"[bold white]{num}. Create Contract[/bold white]")
+            options[str(num)] = "create_contract"
+            num += 1
+
+            self.console.print(f"[bold white]{num}. Create Event[/bold white]")
+            options[str(num)] = "create_event"
+            num += 1
+
+            self.console.print(f"[bold white]{num}. Update Client[/bold white]")
+            options[str(num)] = "update_client"
+            num += 1
+
+            self.console.print(f"[bold white]{num}. Update Contract[/bold white]")
+            options[str(num)] = "update_contract"
+            num += 1
+
+        if role in ["Commercial", "Support"]:
+            self.console.print(f"[bold white]{num}. Update Event[/bold white]")
+            options[str(num)] = "update_event"
+            num += 1
+
+        if role == "Admin":
+            self.console.print(f"[bold white]{num}. Create Collaborator[/bold white]")
+            options[str(num)] = "create_collaborator"
+            num += 1
+
+            self.console.print(f"[bold white]{num}. Update Collaborator[/bold white]")
+            options[str(num)] = "update_collaborator"
+            num += 1
+
+            self.console.print(f"[bold white]{num}. Delete Collaborator[/bold white]")
+            options[str(num)] = "delete_collaborator"
+            num += 1
+
+            self.console.print(f"[bold white]{num}. Delete Client[/bold white]")
+            options[str(num)] = "delete_client"
+            num += 1
+
+            self.console.print(f"[bold white]{num}. Delete Contract[/bold white]")
+            options[str(num)] = "delete_contract"
+            num += 1
+
+            self.console.print(f"[bold white]{num}. Delete Event[/bold white]")
+            options[str(num)] = "delete_event"
+            num += 1
+
+            self.console.print(f"[bold white]{num}. Filter Events without Support[/bold white]")
+            options[str(num)] = "filter_events_without_support"
+            num += 1
+
+            self.console.print(f"[bold white]{num}. Update Any Contract[/bold white]")
+            options[str(num)] = "update_any_contract"
+            num += 1
+
+            self.console.print(f"[bold white]{num}. Update Any Event[/bold white]")
+            options[str(num)] = "update_any_event"
+            num += 1
+
+        self.console.print(f"[bold white]{num}. Return to Main Menu[/bold white]")
+        options[str(num)] = "return_to_main"
+
+        choice = Prompt.ask("Choose an option")
+        return options.get(choice, "invalid")
 
     def display_clients(self, clients):
         table = Table(title="Clients", style="white")
