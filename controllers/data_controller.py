@@ -6,6 +6,7 @@ from views.data_view import DataView
 from controllers.auth_controller import AuthController
 from rich.console import Console
 from rich.prompt import Prompt
+import sentry_sdk
 
 
 class DataController:
@@ -287,67 +288,105 @@ class DataController:
         self.db.commit()
         self.data_view.console.print(f"[bold green]Event '{event.event_name}' deleted successfully.[/bold green]")
 
+    def sign_contract(self, contract_id):
+        try:
+            contract = self.db.query(Contract).filter(Contract.id == contract_id).first()
+            if contract:
+                contract.is_signed = True
+                self.db.commit()
+                sentry_sdk.capture_message(
+                    f"Contract {contract_id} signed by {self.auth_controller.current_user.email}", level="info"
+                )
+            else:
+                self.data_view.console.print(f"[bold red]Contract {contract_id} not found.[/bold red]")
+        except Exception as e:
+            sentry_sdk.capture_exception(e)
+        raise
+
     def create_collaborator(self):
         """Crée un nouveau collaborateur (user) dans le système."""
-        self.data_view.console.print("[bold green]Create a New Collaborator[/bold green]")
-        employee_number = Prompt.ask("Enter employee number")
-        full_name = Prompt.ask("Enter full name")
-        email = Prompt.ask("Enter email")
-        department = Prompt.ask("Enter department")
-        role_name = Prompt.ask("Enter role (Admin/Commercial/Support)")
-        password = Prompt.ask("Enter password", password=True)
+        try:
+            self.data_view.console.print("[bold green]Create a New Collaborator[/bold green]")
+            employee_number = Prompt.ask("Enter employee number")
+            full_name = Prompt.ask("Enter full name")
+            email = Prompt.ask("Enter email")
+            department = Prompt.ask("Enter department")
+            role_name = Prompt.ask("Enter role (Admin/Commercial/Support)")
+            password = Prompt.ask("Enter password", password=True)
 
-        # Création du collaborateur
-        result = self.auth_controller.signup_user(
-            employee_number=employee_number,
-            full_name=full_name,
-            email=email,
-            department=department,
-            role_name=role_name,
-            password=password,
-        )
+            # Création d'un collaborateur
+            result = self.auth_controller.signup_user(
+                employee_number=employee_number,
+                full_name=full_name,
+                email=email,
+                department=department,
+                role_name=role_name,
+                password=password,
+            )
 
-        if result:
-            self.data_view.console.print(f"[bold green]Collaborator {full_name} created successfully![/bold green]")
-        else:
-            self.data_view.console.print(f"[bold red]Failed to create collaborator. Please try again.[/bold red]")
+            if result:
+                self.data_view.console.print(
+                    f"[bold green]Collaborator {full_name} created successfully![/bold green]"
+                )
+            else:
+                self.data_view.console.print(f"[bold red]Failed to create collaborator. Please try again.[/bold red]")
+            sentry_sdk.capture_message(
+                f"Collaborator {full_name} created by {self.auth_controller.current_user.email}", level="info"
+            )
+        except Exception as e:
+            sentry_sdk.capture_exception(e)
+            raise
 
     def update_collaborator(self, collaborator_id):
         """Met à jour les informations d'un collaborateur (user)."""
-        self.data_view.console.print("[bold green]Update Collaborator Information[/bold green]")
+        try:
+            self.data_view.console.print("[bold green]Update Collaborator Information[/bold green]")
 
-        user = self.db.query(User).filter(User.id == collaborator_id).first()
-        if not user:
-            self.data_view.console.print(f"[bold red]Collaborator with ID {collaborator_id} not found.[/bold red]")
-            return
+            user = self.db.query(User).filter(User.id == collaborator_id).first()
+            if not user:
+                self.data_view.console.print(f"[bold red]Collaborator with ID {collaborator_id} not found.[/bold red]")
+                return
 
-        full_name = Prompt.ask(f"Enter full name [{user.full_name}]") or user.full_name
-        email = Prompt.ask(f"Enter email [{user.email}]") or user.email
-        department = Prompt.ask(f"Enter department [{user.department}]") or user.department
-        role_name = Prompt.ask(f"Enter role [{user.role.name}]") or user.role.name
-        password = Prompt.ask("Enter new password (leave empty to keep current)", password=True) or None
+            full_name = Prompt.ask(f"Enter full name [{user.full_name}]") or user.full_name
+            email = Prompt.ask(f"Enter email [{user.email}]") or user.email
+            department = Prompt.ask(f"Enter department [{user.department}]") or user.department
+            role_name = Prompt.ask(f"Enter role [{user.role.name}]") or user.role.name
+            password = Prompt.ask("Enter new password (leave empty to keep current)", password=True) or None
 
-        # Mise à jour des informations du collaborateur
-        user.full_name = full_name
-        user.email = email
-        user.department = department
-        user.role = self.db.query(Role).filter(Role.name == role_name).first()
+            # Mise à jour des informations d'un collaborateur
+            user.full_name = full_name
+            user.email = email
+            user.department = department
+            user.role = self.db.query(Role).filter(Role.name == role_name).first()
 
-        if password:
-            user.set_password(password)
+            if password:
+                user.set_password(password)
 
-        self.db.commit()
-        self.data_view.console.print(f"[bold green]Collaborator {full_name} updated successfully![/bold green]")
+            self.db.commit()
+            self.data_view.console.print(f"[bold green]Collaborator {full_name} updated successfully![/bold green]")
+            sentry_sdk.capture_message(
+                f"Collaborator {user.full_name} updated by {self.auth_controller.current_user.email}", level="info"
+            )
+        except Exception as e:
+            sentry_sdk.capture_exception(e)
+            raise
 
     def delete_collaborator(self, collaborator_id):
         """Supprime un collaborateur (user) du système."""
-        self.data_view.console.print("[bold red]Delete Collaborator[/bold red]")
+        try:
+            self.data_view.console.print("[bold red]Delete Collaborator[/bold red]")
 
-        user = self.db.query(User).filter(User.id == collaborator_id).first()
-        if not user:
-            self.data_view.console.print(f"[bold red]Collaborator with ID {collaborator_id} not found.[/bold red]")
-            return
+            user = self.db.query(User).filter(User.id == collaborator_id).first()
+            if not user:
+                self.data_view.console.print(f"[bold red]Collaborator with ID {collaborator_id} not found.[/bold red]")
+                return
 
-        self.db.delete(user)
-        self.db.commit()
-        self.data_view.console.print(f"[bold red]Collaborator {user.full_name} deleted successfully![/bold red]")
+            self.db.delete(user)
+            self.db.commit()
+            self.data_view.console.print(f"[bold red]Collaborator {user.full_name} deleted successfully![/bold red]")
+            sentry_sdk.capture_message(
+                f"Collaborator {user.full_name} deleted by {self.auth_controller.current_user.email}", level="info"
+            )
+        except Exception as e:
+            sentry_sdk.capture_exception(e)
+            raise

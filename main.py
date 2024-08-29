@@ -7,6 +7,19 @@ from models.contract_model import Contract
 from models.event_model import Event
 from controllers.auth_controller import AuthController
 import config
+import sentry_sdk
+from config import SENTRY_DSN
+from sentry_sdk.integrations.sqlalchemy import SqlalchemyIntegration
+from sentry_sdk.integrations.logging import LoggingIntegration
+
+sentry_sdk.init(
+    dsn=SENTRY_DSN,
+    integrations=[SqlalchemyIntegration(), LoggingIntegration()],
+    traces_sample_rate=1.0,
+    environment="production",
+    send_default_pii=True,
+)
+
 
 configure_mappers()
 engine = create_engine(config.DATABASE_URL)

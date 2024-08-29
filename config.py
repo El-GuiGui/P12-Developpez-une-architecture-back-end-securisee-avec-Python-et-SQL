@@ -1,4 +1,9 @@
+from dotenv import load_dotenv
 import os
+
+load_dotenv()
+
+SENTRY_DSN = os.getenv("SENTRY_DSN")
 
 DB_USER = os.getenv("DB_USER", "adm_user")
 DB_PASSWORD = os.getenv("DB_PASSWORD", "adm6crm")

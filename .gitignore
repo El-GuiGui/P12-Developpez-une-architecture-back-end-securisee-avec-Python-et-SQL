@@ -8,7 +8,7 @@ view/__pycache__/
 .coverage
 alembic.ini
 alembic/
-
+.env
 
 # all .py files
 !.py
