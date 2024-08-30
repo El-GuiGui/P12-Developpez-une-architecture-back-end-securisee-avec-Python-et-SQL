@@ -61,6 +61,8 @@ Créez un environnement virtuel et installez les dépendances requises :
 python -m venv env
 ```
 
+Activez le :
+
 ```bash
 source env/bin/activate  
 ```
@@ -71,6 +73,8 @@ Sur Windows:
 env\Scripts\activate
 ```
 
+Puis : 
+
 ```bash
 pip install -r requirements.txt
 ```
@@ -78,7 +82,7 @@ pip install -r requirements.txt
 
 ### Mise en place de la base de données
 
-Vérifiez la présence de PostgreSQL. Créez une base de données pour l'application : (Dans > Requète  (PGadmin))
+Vérifiez la présence de PostgreSQL. Créez une base de données pour l'application : (Dans > L'éditeur de Requêtes (PGadmin))
 
 ```bash
 CREATE DATABASE crm_db;
@@ -200,7 +204,7 @@ Les administrateurs n'ont pas besoin d'avoir les attributions de leur modificati
 Les tests unitaires sont présents dans le répertoire \`tests/\`. Pour exécuter les tests, utilisez :
 
 ```bash
-    pytest --cov=.
+pytest --cov=.
 ```
 
 La couverture des tests est de xx%
@@ -209,15 +213,15 @@ La couverture des tests est de xx%
 
 Sentry capture automatiquement les exceptions inattendues et enregistre les actions importantes telles que :
 
-- **Création, suppression et modification des collaborateurs**
-- **Les Signature de contrats**
+- **Chaque création/modification d’un collaborateur**
+- **La signature d’un contrat**
 
 
 ## Base de données
 
 ### Utilisation de PostgreSQL et PgAdmin
 
-PostgreSQL est utilisé comme système de gestion de base de données. PgAdmin est utilisé pour gérer et visualiser la base de données de manière graphique.
+PostgreSQL est utilisé comme système de gestion de base de données. PgAdmin est utilisé pour gérer et visualiser la base de données de manière graphique. 
 
 ### Modèles et ORM SQLAlchemy
 
