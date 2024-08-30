@@ -27,8 +27,6 @@
 8. [Base de données](#base-de-données)
    - [Utilisation de PostgreSQL et PgAdmin](#utilisation-de-postgresql-et-pgadmin)
    - [Modèles et ORM SQLAlchemy](#modèles-et-orm-sqlalchemy)
-9. [Contribution](#contribution)
-10. [Licence](#licence)
 
 ## Introduction
 
@@ -185,9 +183,9 @@ Les administrateurs n'ont pas besoin d'avoir les attributions de leur modificati
 
 Les tests unitaires sont présents dans le répertoire \`tests/\`. Pour exécuter les tests, utilisez :
 
-\`\`\`bash
-pytest --cov=.
-\`\`\`
+    \`\`\`bash
+    pytest --cov=.
+    \`\`\`
 
 La couverture des tests est de xx%
 
@@ -203,7 +201,7 @@ Sentry capture automatiquement les exceptions inattendues et enregistre les acti
 
 ### Utilisation de PostgreSQL et PgAdmin
 
-PostgreSQL est utilisé comme système de gestion de base de données. PgAdmin peut être utilisé pour gérer et visualiser la base de données de manière graphique.
+PostgreSQL est utilisé comme système de gestion de base de données. PgAdmin est utilisé pour gérer et visualiser la base de données de manière graphique.
 
 ### Modèles et ORM SQLAlchemy
 
