@@ -45,10 +45,13 @@ Epic Events est une application de gestion de la relation client (CRM) développ
 
 Clonez ce repository sur votre machine locale :
 
-\`\`\`bash
+```bash
 git clone https://github.com/El-GuiGui/P12-Developpez-une-architecture-back-end-securisee-avec-Python-et-SQL.git
+```
+
+```bash
 cd P12-Developpez-une-architecture-back-end-securisee-avec-Python-et-SQL-main
-\`\`\`
+```
 
 ### Installation des dépendances
 
