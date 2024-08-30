@@ -57,27 +57,40 @@ cd P12-Developpez-une-architecture-back-end-securisee-avec-Python-et-SQL-main
 
 Créez un environnement virtuel et installez les dépendances requises :
 
-\`\`\`bash
+```bash
 python -m venv env
-source env/bin/activate  # Sur Windows: env\Scripts\activate
+```
+
+```bash
+source env/bin/activate  
+```
+
+# Sur Windows: 
+
+```bash
+env\Scripts\activate
+```
+
+```bash
 pip install -r requirements.txt
-\`\`\`
+```
+
 
 ### Mise en place de la base de données
 
-Vérifiez la présence de PostgreSQL. Créez une base de données pour l'application :
+Vérifiez la présence de PostgreSQL. Créez une base de données pour l'application : (Dans > Requète  (PGadmin))
 
-\`\`\`sql
+```bash
 CREATE DATABASE crm_db;
-\`\`\`
+```
 
 ### Initialisation des tables
 
 Le script \`models.py\` à la racine du projet contient la création des tables. Pour initialiser la base de données, exécutez :
 
-\`\`\`bash
+```bash
 python models.py
-\`\`\`
+```
 
 **ou** 
 
@@ -87,16 +100,16 @@ Pour initialiser la base de données, suivez ces étapes :
 Générez une migration initiale :
 
 
-\`\`\`bash
+```bash
 alembic revision --autogenerate -m "Initial migration"
-\`\`\`
+```
 
 Appliquez la migration pour créer les tables dans la base de données :
 
 
-\`\`\`bash
+```bash
 alembic upgrade head
-\`\`\`
+```
 
 ## Configuration
 
@@ -106,9 +119,9 @@ Pour capturer les erreurs et exceptions, Sentry a été intégré. Configurez le
 
 (la clé DSN s'obtient en créant un nouveau projet sur Sentry, vous lié donc ce projet Sentry à l'application)
 
-\`\`\`env
+```bash
 SENTRY_DSN=votre_clé_dsn
-\`\`\`
+```
 
 ### Configuration des variables d'environnement
 
@@ -116,7 +129,7 @@ Le fichier \`config.py\` doit contenir les informations de connexion à la base 
 (on rajoutera seulement le raccourci de la clé DSN ici, question de confidentialité ...)
 Pour le reste le fichier \`config.py\` déjà fournis contient les données suffisantes :
 
-\`\`\`config.py
+```bash
 from dotenv import load_dotenv
 import os
 
@@ -131,7 +144,7 @@ DB_PORT=5432
 DB_NAME=crm_db
 
 DATABASE_URL = f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
-\`\`\`
+```
 
 ## Utilisation de l'application
 
@@ -186,9 +199,9 @@ Les administrateurs n'ont pas besoin d'avoir les attributions de leur modificati
 
 Les tests unitaires sont présents dans le répertoire \`tests/\`. Pour exécuter les tests, utilisez :
 
-    \`\`\`bash
+```bash
     pytest --cov=.
-    \`\`\`
+```
 
 La couverture des tests est de xx%
 
