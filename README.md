@@ -38,8 +38,8 @@ Epic Events est une application de gestion de la relation client (CRM) développ
 
 - Python 3.1x
 - PostgreSQL
-- PgAdmin (facultatif)
-- Git
+- PgAdmin
+
 
 ### Cloner le Repository
 
@@ -65,7 +65,7 @@ python -m venv env
 source env/bin/activate  
 ```
 
-# Sur Windows: 
+Sur Windows: 
 
 ```bash
 env\Scripts\activate
