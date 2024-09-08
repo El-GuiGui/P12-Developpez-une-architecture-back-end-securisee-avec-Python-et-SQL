@@ -4,10 +4,18 @@ from rich.table import Table
 
 
 class DataView:
+    """
+    Classe pour gérer l'affichage des données dans la console via Rich.
+    """
+
     def __init__(self):
         self.console = Console()
 
     def display_data_menu(self, role):
+        """
+        Affiche le menu des données en fonction du rôle de l'utilisateur.
+        Retourne l'option choisie.
+        """
         self.console.rule("[bold green]Epic Events Administration[/bold green]")
         self.console.rule(
             "[bold green]OK[/bold green] - [bold yellow]Information Message[/bold yellow] - [bold red]Error/Problem/Incorrect entry[/bold red]"
@@ -101,6 +109,9 @@ class DataView:
         return options.get(choice, "invalid")
 
     def display_clients(self, clients):
+        """
+        Affiche la liste des clients et leurs informations associés dans un tableau.
+        """
         table = Table(title="Clients", style="white")
         table.add_column("Client ID", style="white")
         table.add_column("Full Name", style="white", no_wrap=True)
@@ -126,27 +137,37 @@ class DataView:
         self.console.print(table)
 
     def display_contracts(self, contracts):
+        """
+        Affiche la liste des contrats et leurs informations associés dans un tableau.
+        """
         table = Table(title="Contracts", style="white")
         table.add_column("Contract ID", style="white")
-        table.add_column("Client Name", style="white")
-        table.add_column("Description", style="white")
+        table.add_column("Client ID", style="white")
+        table.add_column("Commercial Contact", style="white")
         table.add_column("Total Amount", style="white")
-        table.add_column("Date Signed", style="white")
-        table.add_column("Is Signed", style="white")
+        table.add_column("Amount Due", style="white")
+        table.add_column("Creation Date", style="white")
+        table.add_column("Signed", style="white")
+        table.add_column("User ID", style="white")
 
         for contract in contracts:
             table.add_row(
                 str(contract.id),
-                contract.client.full_name,
-                contract.description,
+                str(contract.client_id),
+                contract.commercial_contact,
                 str(contract.total_amount),
-                str(contract.date_signed),
-                "Yes" if contract.is_signed else "No",
+                str(contract.amount_due),
+                str(contract.creation_date),
+                "Yes" if contract.signed else "No",
+                str(contract.user_id),
             )
 
         self.console.print(table)
 
     def display_events(self, events):
+        """
+        Affiche la liste des évenements et leurs informations associés dans un tableau.
+        """
         table = Table(title="Events", style="white")
         table.add_column("Event ID", style="white")
         table.add_column("Event Name", style="white", no_wrap=True)
@@ -155,7 +176,6 @@ class DataView:
         table.add_column("Date End", style="white")
         table.add_column("Client Name", style="white")
         table.add_column("Support Contact", style="white")
-        table.add_column("Status", style="white")
 
         for event in events:
             table.add_row(
@@ -166,7 +186,6 @@ class DataView:
                 str(event.event_date_end),
                 event.client.full_name,
                 event.support_contact,
-                event.status,
             )
 
         self.console.print(table)

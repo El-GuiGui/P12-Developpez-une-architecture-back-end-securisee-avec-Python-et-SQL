@@ -11,6 +11,11 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 
 class Client(Base):
+    """
+    Représente un client dans la base de données.
+    Gère les informations de contact et les relations contractuelles.
+    """
+
     __tablename__ = "clients"
     id = Column(Integer, primary_key=True, index=True)
     full_name = Column(String, index=True)
@@ -26,6 +31,11 @@ class Client(Base):
 
 
 class Contract(Base):
+    """
+    Représente un contrat dans la base de données.
+    Associe un client, un montant total et des événements liés.
+    """
+
     __tablename__ = "contracts"
     id = Column(Integer, primary_key=True, index=True)
     client_id = Column(Integer, ForeignKey("clients.id"))
@@ -40,6 +50,11 @@ class Contract(Base):
 
 
 class Event(Base):
+    """
+    Représente un événement dans la base de données.
+    Associe à un contrat et à un client, avec des détails sur l'événement.
+    """
+
     __tablename__ = "events"
     id = Column(Integer, primary_key=True, index=True)
     contract_id = Column(Integer, ForeignKey("contracts.id"))

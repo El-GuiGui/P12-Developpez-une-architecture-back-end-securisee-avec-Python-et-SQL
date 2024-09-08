@@ -4,6 +4,10 @@ from models.base_model import Base
 
 
 class Event(Base):
+    """
+    Représente un événement dans le système, associé à un contrat et un client.
+    """
+
     __tablename__ = "events"
     id = Column(Integer, primary_key=True, index=True)
     contract_id = Column(Integer, ForeignKey("contracts.id"))

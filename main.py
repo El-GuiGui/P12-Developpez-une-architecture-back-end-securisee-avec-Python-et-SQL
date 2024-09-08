@@ -27,10 +27,16 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 
 def init_db():
+    """
+    Initialise la base de données en créant toutes les tables définies.
+    """
     Base.metadata.create_all(bind=engine)
 
 
 def main():
+    """
+    Démarre l'application en initialisant la base de données et les contrôleurs.
+    """
     db = SessionLocal()
     auth_controller = AuthController(db)
 

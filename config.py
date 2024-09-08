@@ -3,6 +3,10 @@ import os
 
 load_dotenv()
 
+"""
+Configuration de la connexion à la DB et connexion à Sentry via la Clé DSN
+"""
+
 SENTRY_DSN = os.getenv("SENTRY_DSN")
 
 DB_USER = os.getenv("DB_USER", "adm_user")

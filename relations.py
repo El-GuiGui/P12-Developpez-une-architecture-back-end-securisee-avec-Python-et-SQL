@@ -5,6 +5,9 @@ from models.event_model import Event
 from sqlalchemy.orm import relationship
 
 
+"""
+Lie les utilisateurs aux clients, contrats et événements.
+"""
 User.clients = relationship("Client", back_populates="user")
 User.contracts = relationship("Contract", back_populates="user")
 User.events = relationship("Event", back_populates="user")

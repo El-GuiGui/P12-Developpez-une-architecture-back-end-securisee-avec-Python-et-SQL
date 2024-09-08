@@ -5,6 +5,11 @@ from passlib.hash import argon2
 
 
 class Role(Base):
+    """
+    Représente un rôle utilisateur dans l'application.
+    Définit les attributs et les relations pour un rôle.
+    """
+
     __tablename__ = "roles"
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, unique=True, index=True)
@@ -14,6 +19,10 @@ class Role(Base):
 
 
 class User(Base):
+    """
+    Représente un utilisateur de l'application avec ses informations personnelles et ses relations.
+    """
+
     __tablename__ = "users"
     id = Column(Integer, primary_key=True, index=True)
     employee_number = Column(Integer, unique=True, index=True)
